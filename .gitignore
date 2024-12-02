@@ -1,1 +1,4 @@
 /input
+.clj-kondo/
+.cpcache/
+.lsp/

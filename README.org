@@ -1,0 +1,2 @@
+#+title: Advent of Code 2024
+Solving this year in clojure!

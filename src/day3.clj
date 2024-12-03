@@ -14,7 +14,7 @@
        (reduce +)))
 
 (defn part2 [input]
-  (->> (str/replace input "\n" "")
+  (->> input
        (re-seq #"(?:do\(\)|^)(.|\n)*?(?:don't\(\)|$)")
        (map first)
        (map part1)

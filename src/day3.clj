@@ -1,6 +1,5 @@
 (ns day3)
 
-
 (def input (slurp "input/day3.txt"))
 
 (defn parse-mul [[_ a b]]

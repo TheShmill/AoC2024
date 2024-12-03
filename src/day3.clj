@@ -1,5 +1,5 @@
-(ns day3
-  )
+(ns day3)
+
 
 (def input (slurp "input/day3.txt"))
 

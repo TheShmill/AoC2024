@@ -9,11 +9,10 @@
          guard nil
          squares #{}]
     (case c
-      nil
-      {:squares squares
-       :guard guard
-       :max-x (dec x)
-       :max-y y}
+      nil {:squares squares
+           :guard guard
+           :max-x (dec x)
+           :max-y y}
       \newline (recur 0 (inc y) rest guard squares)
       \. (recur (inc x) y rest guard squares)
       \# (recur (inc x) y rest guard (conj squares [x y]))

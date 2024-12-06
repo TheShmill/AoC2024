@@ -49,7 +49,7 @@
     (loop [[x y dir :as pos] guard
            n 0]
       (let [[new-x new-y] (next-pos pos)]
-        (cond (< 5668 n) true
+        (cond (< 10000 n) true
               (squares [new-x new-y]) (recur [x y (rot dir)] (inc n))
               (neg? new-x) false
               (neg? new-y) false

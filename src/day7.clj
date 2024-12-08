@@ -5,7 +5,7 @@
 (def input (slurp "input/day7.txt"))
 
 (defn | [num1 num2]
-  (+ (* (int (pow 10 (inc (int (m/log10 num2)))))
+  (+ (* (int (m/pow 10 (inc (int (m/log10 num2)))))
         num1)
      num2))
 

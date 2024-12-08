@@ -40,6 +40,6 @@
 (defn part2 [input]
   (->> input
        str/split-lines
-       (mapv #(handle-line % [+ * |]))
+       (pmap #(handle-line % [+ * |]))
        (remove nil?)
        (reduce +)))

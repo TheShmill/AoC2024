@@ -1,5 +1,6 @@
 (ns day6
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [clojure.core.reducers :as r]))
 
 (def input (str/trim (slurp "input/day6.txt")))
 
@@ -31,11 +32,11 @@
            visited #{}]
       (let [[new-x new-y] (next-pos pos)]
         (cond (squares [new-x new-y]) (recur [x y (rot dir)] visited)
-              (neg? new-x) (conj visited [x y])
-              (neg? new-y) (conj visited [x y])
-              (> new-x max-x) (conj visited [x y])
-              (> new-y max-y) (conj visited [x y])
-              :else (recur [new-x new-y dir] (conj visited [x y])))))))
+                (neg? new-x) (conj visited [x y])
+                (neg? new-y) (conj visited [x y])
+                (> new-x max-x) (conj visited [x y])
+                (> new-y max-y) (conj visited [x y])
+                :else (recur [new-x new-y dir] (conj visited [x y])))))))
 
 (defn part1 [input]
   (->> input
@@ -46,21 +47,21 @@
 (defn cycle? [{:keys [squares guard max-x max-y]}]
   (let [[x y dir] guard]
     (loop [[x y dir :as pos] guard
-           n 0]
+           corners (transient #{})]
       (let [[new-x new-y] (next-pos pos)]
-        (cond (< 10000 n) true
-              (squares [new-x new-y]) (recur [x y (rot dir)] (inc n))
-              (neg? new-x) false
-              (neg? new-y) false
-              (> new-x max-x) false
-              (> new-y max-y) false
-              :else (recur [new-x new-y dir] (inc n)))))))
+        (cond (corners pos) 1
+              (squares [new-x new-y]) (recur [x y (rot dir)] (conj! corners pos))
+              (neg? new-x) 0
+              (neg? new-y) 0
+              (> new-x max-x) 0
+              (> new-y max-y) 0
+              :else (recur [new-x new-y dir] corners))))))
 
 (defn part2 [input]
   (let [parsed (parse-input input)]
     (->> parsed
          tick-loop
-         (map #(update-in parsed [:squares] conj %))
-         (pmap cycle?)
-         (filter true?)
-         count)))
+         (into [])
+         (r/map #(update-in parsed [:squares] conj %))
+         (r/map cycle?)
+         (r/fold 8 + +))))

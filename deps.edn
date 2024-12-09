@@ -1,1 +1,2 @@
-{}
+{:deps {org.clojure/math.combinatorics {:mvn/version "0.3.0"}
+        criterium/criterium {:mvn/version "0.4.6"}}}

@@ -10,8 +10,16 @@
        (some pred)))
 
 (defn ^:export input->grid [input]
-  (loop [x 0, y 0, [c & rest] input, heights {}]
+  (loop [x 0, y 0, [c & rest] input, nodes {}]
     (cond
-      (nil? c) heights
-      (= c \newline) (recur 0 (inc y) rest heights)
-      :else (recur (inc x) y rest (assoc heights [x y] c)))))
+      (nil? c) nodes
+      (= c \newline) (recur 0 (inc y) rest nodes)
+      :else (recur (inc x) y rest (assoc nodes [x y] c)))))
+
+
+(defn ^:export neighbors [[x y]]
+  (for [dx [-1 0 1]
+        dy [-1 0 1]
+        :when (or (not= dx 0)
+                  (not= dy 0))]
+    [(+ x dx) (+ y dy)]))

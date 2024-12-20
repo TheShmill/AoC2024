@@ -14,12 +14,5 @@
     (cond
       (nil? c) nodes
       (= c \newline) (recur 0 (inc y) rest nodes)
+
       :else (recur (inc x) y rest (assoc nodes [x y] c)))))
-
-
-(defn ^:export neighbors [[x y]]
-  (for [dx [-1 0 1]
-        dy [-1 0 1]
-        :when (or (not= dx 0)
-                  (not= dy 0))]
-    [(+ x dx) (+ y dy)]))
